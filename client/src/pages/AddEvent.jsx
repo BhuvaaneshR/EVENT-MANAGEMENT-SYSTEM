@@ -35,16 +35,26 @@ export default function AddEvent() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    const formDataToSend = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+        formDataToSend.append(key, value);
+    });
+
     axios
-      .post("/createEvent", formData)
+      .post("/createEvent", formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       .then((response) => {
         console.log("Event posted successfully:", response.data);
-        
       })
       .catch((error) => {
         console.error("Error posting event:", error);
       });
-  };
+};
+
 
   return (
     <div className='flex flex-col ml-20 mt-10'>
@@ -63,7 +73,7 @@ export default function AddEvent() {
           />
         </label>
         <label className='flex flex-col'>
-          Optional:
+          Sub-title:
           <input
             type="text"
             name="optional"
@@ -136,6 +146,7 @@ export default function AddEvent() {
           <input
             type="file"
             name="image"
+            accept="image/*"
             
             className=' rounded mt-2 pl-5 px-4 py-10 ring-sky-700 ring-2 h-8 border-none'
             onChange={handleImageUpload}
