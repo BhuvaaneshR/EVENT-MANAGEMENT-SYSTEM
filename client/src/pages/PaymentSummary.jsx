@@ -117,6 +117,7 @@ export default function PaymentSummary() {
     setRedirect(true)
     console.log('Success creating ticket', updatedTicketDetails)
   } catch (error) {
+    alert("Signin to make payment");
     console.error('Error creating ticket:', error);
   }
 
